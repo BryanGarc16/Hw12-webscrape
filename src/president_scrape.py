@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+import matplotlib.pyplot as plt
 
 my_driver = webdriver.Chrome()
 my_driver.set_page_load_timeout(60)
@@ -42,6 +43,7 @@ for link in pres_links:
     for paragraph in paragraphs:
         if "war" in paragraph.text.lower():
            pres_dict[pres_name] += 1
+my_driver.quit()
 
 sorted_pres = sorted(pres_dict.items(), key=lambda item: item[1], reverse=True)
 print(len(sorted_pres))
@@ -49,6 +51,15 @@ print(sorted_pres)
 
 for pres, num in sorted_pres:
     print(f"{pres}: {num}")
+
+x_vals = [ii for ii in range(len(pres_dict.keys()))]
+y_vals = [num for pres, num in pres_dict.items()]
+plt.plot(x_vals, y_vals)
+plt.annotate("Grant", xy=(x_vals[18], y_vals[18]))
+plt.annotate("Truman", xy=(x_vals[33], y_vals[33]))
+plt.annotate("Lincoln", xy=(x_vals[17], y_vals[17]))
+plt.annotate("Nixon", xy=(x_vals[37], y_vals[37]))
+plt.show()
 
 
 
